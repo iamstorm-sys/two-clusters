@@ -1,2 +1,2 @@
 # two-clusters
-Folder Setup for two Clusters
+Folder Setup for two-clusters demo
