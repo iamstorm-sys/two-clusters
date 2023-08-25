@@ -1,0 +1,16 @@
+version: "3.7"
+name: "cluster-2"
+services:
+  broker-4:
+    command: # we can pass commands when executing a container
+    image: docker.redpanda.com/redpandadata/redpanda:v23.2.6 
+    container_name: broker-4
+  broker-5:
+    command: # we can pass commands when executing a container
+    image: docker.redpanda.com/redpandadata/redpanda:v23.2.6 
+    container_name: broker-5
+  broker-6:
+    command: # we can pass commands when executing a container
+    image: docker.redpanda.com/redpandadata/redpanda:v23.2.6  
+    container_name: broker-6
+  
