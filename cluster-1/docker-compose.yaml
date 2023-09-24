@@ -1,16 +1,34 @@
 version: "3.7"
-name: "cluster-1"
+name: cluster-1
+networks:
+  redpanda_network:
+    driver: bridge
+volumes:
+  cluster-1-volume: null
 services:
-  broker-1:
-    command: # we can pass commands when executing a container
-    image: docker.redpanda.com/redpandadata/redpanda:v23.2.6 
-    container_name: broker-1
-  broker-2:
-    command: # we can pass commands when executing a container
-    image: docker.redpanda.com/redpandadata/redpanda:v23.2.6 
-    container_name: broker-2
-  broker-3:
-    command: # we can pass commands when executing a container
-    image: docker.redpanda.com/redpandadata/redpanda:v23.2.6  
-    container_name: broker-3
-  
+  cluster-1-broker:
+    command:
+      - redpanda
+      - start
+      - --kafka-addr internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr internal://cluster-1-broker:9092,external://localhost:19092
+      - --pandaproxy-addr internal://0.0.0.0:8082,external://0.0.0.0:18082
+      - --advertise-pandaproxy-addr internal://cluster-1-broker:8082,external://localhost:18082
+      - --schema-registry-addr internal://0.0.0.0:8081,external://0.0.0.0:18081
+      - --rpc-addr cluster-1-broker:33145
+      - --advertise-rpc-addr cluster-1-broker:33145
+      - --smp 1
+      - --memory 1G
+      - --mode dev-container
+      - --default-log-level=debug
+    image: docker.redpanda.com/redpandadata/redpanda:v23.2.9
+    container_name: cluster-1-broker
+    volumes:
+      - cluster-1-volume:/var/lib/redpanda/data
+    networks:
+      - redpanda_network
+    ports:
+      - 18081:18081
+      - 18082:18082
+      - 19092:19092
+ 
