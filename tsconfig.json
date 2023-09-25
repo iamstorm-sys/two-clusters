@@ -13,7 +13,9 @@
         "strict": true,
         "sourceMap": true,
         "noImplicitAny": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "allowImportingTsExtensions": true,
+        "noEmit": true
     },
     "ts-node": {
         // Tell ts-node CLI to install the --loader automatically
